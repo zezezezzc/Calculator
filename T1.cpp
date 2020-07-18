@@ -4,13 +4,13 @@
 using namespace std;
 using std::string;
 
-//ÊäÈëËãÊ½+»Ø³µ¼´¿É
+//è¾“å…¥ç®—å¼+å›è½¦å³å¯
 /*
-Ö§³ÖÀ¨ºÅ£¬¼Ó¼õ³Ë³ı»ìºÏÔËËã£¬Ğ¡ÊıÓëÕûÊı»ìºÏÔËËã
-Ö§³Ö * / ÓÅÏÈ
+æ”¯æŒæ‹¬å·ï¼ŒåŠ å‡ä¹˜é™¤æ··åˆè¿ç®—ï¼Œå°æ•°ä¸æ•´æ•°æ··åˆè¿ç®—
+æ”¯æŒ * / ä¼˜å…ˆ
 */
 
-void caculate(vector<float>& v1, vector<char>& v2, int i)	//Íê³ÉÒ»´Î·´Ïò¼ÆËã
+void caculate(vector<float>& v1, vector<char>& v2, int i)	//å®Œæˆä¸€æ¬¡æ‹¬å·åŒ–ç®€
 {
 	switch (v2[i-1])
 	{
@@ -20,11 +20,11 @@ void caculate(vector<float>& v1, vector<char>& v2, int i)	//Íê³ÉÒ»´Î·´Ïò¼ÆËã
 		case '/': v1[i-1] /= v1[i]; break;
 	}
 	v1.pop_back();
-	v2[i-1] = v2[i];	//·ûºÅÇ°ÒÆÒ»¸ö
+	v2[i-1] = v2[i];	//ç¬¦å·å‰ç§»ä¸€ä¸ª
 	v2.pop_back();
 }
 
-void simplify(vector<float>& v1, vector<char>& v2, int i)	//Íê³ÉÒ»´Î·´Ïò¼ÆËã
+void simplify(vector<float>& v1, vector<char>& v2, int i)	//å®Œæˆä¸€æ¬¡åå‘è®¡ç®—
 {
 	switch (v2[i])
 	{
@@ -35,13 +35,13 @@ void simplify(vector<float>& v1, vector<char>& v2, int i)	//Íê³ÉÒ»´Î·´Ïò¼ÆËã
 	}	
 	
 	v1.pop_back();
-	v2[i] = v2[i+1];	//À¨ºÅÇ°ÒÆÒ»¸ö
-	v2.pop_back();	//É¾³ıÒ»¸ö¾ÉµÄ 
+	v2[i] = v2[i+1];	//æ‹¬å·å‰ç§»ä¸€ä¸ª
+	v2.pop_back();	//åˆ é™¤ä¸€ä¸ªæ—§çš„ 
 }
 
 int main() {
-	cout << "»¶Ó­Ê¹ÓÃ£¬ÇÃ»÷»Ø³µÍË³ö" << endl;
-	cout << "ÇëÊäÈëËãÊ½£º" << endl;
+	cout << "æ¬¢è¿ä½¿ç”¨ï¼Œæ•²å‡»å›è½¦é€€å‡º" << endl;
+	cout << "è¯·è¾“å…¥ç®—å¼ï¼š" << endl;
 	string cacul;
 	std::vector<float> fnum;
 	std::vector<char> csign;
@@ -55,15 +55,15 @@ int main() {
 		string s = "";
 		fnum.clear();
 		csign.clear();
-		/* ½øĞĞ¼ÆËã */
-		for (auto c : cacul) {		//×ó¡¢ÓÒÀ¨ºÅ() »áÓöµ½Á½¸ö·ûºÅÁ¬ÔÚÒ»Æğ 
+		/* è¿›è¡Œè®¡ç®— */
+		for (auto c : cacul) {		//å·¦ã€å³æ‹¬å·() ä¼šé‡åˆ°ä¸¤ä¸ªç¬¦å·è¿åœ¨ä¸€èµ· 
 			if (c == '+' || c == '-' || c == '*' || c == '/' || c == '(' || c == ')') {
 				
-				if (!s.empty()) {	//ÏÈÊäÈëÎª·ûºÅ
-					x = stof(s);	//×ª»»Îª¸¡µãÊı
+				if (!s.empty()) {	//å…ˆè¾“å…¥ä¸ºç¬¦å·
+					x = stof(s);	//è½¬æ¢ä¸ºæµ®ç‚¹æ•°
 					fnum.push_back(x);
-					s = "";		//Çå¿ÕsÖĞ´æµÄÊı×Ö
-					index = fnum.size() - 1;	//·ûºÅvectorÖĞ¼´½«´æÈëÔªËØµÄÏÂ±ê
+					s = "";		//æ¸…ç©ºsä¸­å­˜çš„æ•°å­—
+					index = fnum.size() - 1;	//ç¬¦å·vectorä¸­å³å°†å­˜å…¥å…ƒç´ çš„ä¸‹æ ‡
 				}
 
 				if (c == '(') {
@@ -74,10 +74,10 @@ int main() {
 					csign.push_back(c);
 					while (csign[index] != '(') {
 						simplify(fnum, csign, index);
-						index = fnum.size() - 1;	//ÖØĞÂ¼ÆËãÏÂ±ê
+						index = fnum.size() - 1;	//é‡æ–°è®¡ç®—ä¸‹æ ‡
 					}
 					csign.pop_back();
-					csign.pop_back();	//È¥³ı×óÓÒÀ¨ºÅ
+					csign.pop_back();	//å»é™¤å·¦å³æ‹¬å·
 					continue;
 				}
 				if (c == '*' || c == '/') {
@@ -85,14 +85,14 @@ int main() {
 				}
 				else {
 					if (index == 0) {
-						csign.push_back(c);		//´æÈë + »ò -
+						csign.push_back(c);		//å­˜å…¥ + æˆ– -
 					}
 					else {						
-						csign.push_back(c);		//´æÈë + »ò -
-						if (csign[index] != '(') {	//Òª¼ì²âÊÇ·ñÔÚÀ¨ºÅÄÚ 
+						csign.push_back(c);		//å­˜å…¥ + æˆ– -
+						if (csign[index] != '(') {	//è¦æ£€æµ‹æ˜¯å¦åœ¨æ‹¬å·å†… 
 							while (csign[index-1] == '*' || csign[index-1] == '/') {
-								caculate(fnum, csign, index);	//ÏòÇ°¼ÆËã
-								index = fnum.size() - 1;	//ÖØĞÂ¼ÆËãÏÂ±ê
+								caculate(fnum, csign, index);	//å‘å‰è®¡ç®—
+								index = fnum.size() - 1;	//é‡æ–°è®¡ç®—ä¸‹æ ‡
 							}
 						}
 					}
@@ -102,26 +102,26 @@ int main() {
 				s += c;
 			}
 		}
-		if (!s.empty()) {//ÈôÊ½ÖĞ×îºóÎªÊı×Ö½«Æä×ª»»Îª¸¡µãÊı
+		if (!s.empty()) {//è‹¥å¼ä¸­æœ€åä¸ºæ•°å­—å°†å…¶è½¬æ¢ä¸ºæµ®ç‚¹æ•°
 			x = stof(s);	
 			fnum.push_back(x);
-			s = "";		//Çå¿ÕsÖĞ´æµÄÊı×Ö
-			index = fnum.size() - 1;	//·ûºÅvectorÖĞ¼´½«´æÈëÔªËØµÄÏÂ±ê
+			s = "";		//æ¸…ç©ºsä¸­å­˜çš„æ•°å­—
+			index = fnum.size() - 1;	//ç¬¦å·vectorä¸­å³å°†å­˜å…¥å…ƒç´ çš„ä¸‹æ ‡
 		}
 				
-		while (!csign.empty()) {	//´ÓÓÒÖÁ×ó½øĞĞ¼ÆËã
-			index = fnum.size() - 1;	//¼ÆËãÊ½ÖĞ ¼ÆËãÔªËØµÄÏÂ±ê
+		while (!csign.empty()) {	//ä»å³è‡³å·¦è¿›è¡Œè®¡ç®—
+			index = fnum.size() - 1;	//è®¡ç®—å¼ä¸­ è®¡ç®—å…ƒç´ çš„ä¸‹æ ‡
 			caculate(fnum, csign, index);
 		}
 
 		res = fnum[0];
-		cout << "¼ÆËã½á¹ûÎª£º" << res << '\n' <<"ÇÃ»÷»Ø³µ¼´¿ÉÍË³ö»òÊäÈëËãÊ½£º" << endl;
+		cout << "è®¡ç®—ç»“æœä¸ºï¼š" << res << '\n' <<"æ•²å‡»å›è½¦å³å¯é€€å‡ºæˆ–è¾“å…¥ç®—å¼ï¼š" << endl;
 	}
 
 	return 0;
 }
 
-/*
+/* Test
 int main()
 {
 	std::vector<float> f{0.05, 0.75};
@@ -133,24 +133,24 @@ int main()
 */
 
 /*
-	È¡³öÊı×ÖºÍ¼ÆËã·ûºÅµÈ
+	å–å‡ºæ•°å­—å’Œè®¡ç®—ç¬¦å·ç­‰
 */
 // std::vector<float> fnum;
 // std::vector<char> csign;
 // for(auto c:cacul) {	
 // 	if(c=='+'|c=='-'|c=='*'|c=='/'|c=='('|c==')') {
 // 		if(s.empty) {
-// 			cout << "ÊäÈë´íÎó" <<endl;
+// 			cout << "è¾“å…¥é”™è¯¯" <<endl;
 // 			break;
 // 		}
-// 		x = stof(s);	//×ª»»Îª¸¡µãÊı
-// 		fnum.push_back(x);		//fnum.pop_back É¾³ıÄ©Î²ÔªËØ
+// 		x = stof(s);	//è½¬æ¢ä¸ºæµ®ç‚¹æ•°
+// 		fnum.push_back(x);		//fnum.pop_back åˆ é™¤æœ«å°¾å…ƒç´ 
 // 		csign.push_back(c);
 // 	}
 // 	else {
 // 		s += c;
 // 	}
 // }
-// if((fnum.size()+csign.size())%2==0) {	// ±äÁ¿ºÍ·ûºÅºÍ²»ÎªÆæÊıÔòÊäÈë´íÎó
-// 	cout <<"ÊäÈëËãÊ½²»Æ¥Åä£¬ÖØĞÂÊäÈë£º"<< endl;
+// if((fnum.size()+csign.size())%2==0) {	// å˜é‡å’Œç¬¦å·å’Œä¸ä¸ºå¥‡æ•°åˆ™è¾“å…¥é”™è¯¯
+// 	cout <<"è¾“å…¥ç®—å¼ä¸åŒ¹é…ï¼Œé‡æ–°è¾“å…¥ï¼š"<< endl;
 // }
