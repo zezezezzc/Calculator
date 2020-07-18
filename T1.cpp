@@ -10,21 +10,44 @@ using std::string;
 支持 * / 优先
 */
 
-void caculate(vector<float>& v1, vector<char>& v2, int i)	//完成一次括号化简
+void caculate(vector<float>& v1, vector<char>& v2, int i, bool flg)	//完成一次计算
 {
-	switch (v2[i-1])
-	{
-		case '+': v1[i-1] += v1[i]; break;
-		case '-': v1[i-1] -= v1[i]; break;
-		case '*': v1[i-1] *= v1[i]; break;
-		case '/': v1[i-1] /= v1[i]; break;
+	if (flg) {
+		int t = i-2;	 //检查移一个符号是否为- 
+		if (t>=0) {
+			switch (v2[t])
+			{
+				case '+': v1[i-1] -= v1[i]; break;
+				case '-': v1[i-1] += v1[i]; break;	//更改 + - 
+				case '*': v1[i-1] *= v1[i]; break;
+				case '/': v1[i-1] /= v1[i]; break;
+			}
+		}
+		else {
+			switch (v2[i-1])
+			{
+				case '+': v1[i-1] += v1[i]; break;
+				case '-': v1[i-1] -= v1[i]; break;
+				case '*': v1[i-1] *= v1[i]; break;
+				case '/': v1[i-1] /= v1[i]; break;
+			}
+		}
 	}
+	else {
+		switch (v2[i-1])
+		{
+			case '+': v1[i-1] += v1[i]; break;
+			case '-': v1[i-1] -= v1[i]; break;
+			case '*': v1[i-1] *= v1[i]; break;
+			case '/': v1[i-1] /= v1[i]; break;
+		}	
+	}	
 	v1.pop_back();
 	v2[i-1] = v2[i];	//符号前移一个
 	v2.pop_back();
 }
 
-void simplify(vector<float>& v1, vector<char>& v2, int i)	//完成一次反向计算
+void simplify(vector<float>& v1, vector<char>& v2, int i)	//完成一次化简 
 {
 	switch (v2[i])
 	{
@@ -91,7 +114,7 @@ int main() {
 						csign.push_back(c);		//存入 + 或 -
 						if (csign[index] != '(') {	//要检测是否在括号内 
 							while (csign[index-1] == '*' || csign[index-1] == '/') {
-								caculate(fnum, csign, index);	//向前计算
+								caculate(fnum, csign, index, false);	//优先计算乘除 
 								index = fnum.size() - 1;	//重新计算下标
 							}
 						}
@@ -110,8 +133,8 @@ int main() {
 		}
 				
 		while (!csign.empty()) {	//从右至左进行计算
-			index = fnum.size() - 1;	//计算式中 计算元素的下标
-			caculate(fnum, csign, index);
+			index = fnum.size() - 1;	//计算式中计算元素的下标
+			caculate(fnum, csign, index, true);
 		}
 
 		res = fnum[0];
@@ -121,7 +144,7 @@ int main() {
 	return 0;
 }
 
-/* Test
+/*
 int main()
 {
 	std::vector<float> f{0.05, 0.75};
